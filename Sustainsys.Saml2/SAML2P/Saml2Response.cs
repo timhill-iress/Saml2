@@ -145,7 +145,7 @@ namespace Sustainsys.Saml2.Saml2P
         private void ReadAndValidateInResponseTo(XmlElement xml, Saml2Id expectedInResponseTo, IOptions options)
         {
             var parsedInResponseTo = xml.Attributes["InResponseTo"].GetValueIfNotNull();
-            if (parsedInResponseTo != null)
+            if (!string.IsNullOrEmpty(parsedInResponseTo))
             {
                 InResponseTo = new Saml2Id(parsedInResponseTo);
                 if (expectedInResponseTo == null)

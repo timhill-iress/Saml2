@@ -89,6 +89,7 @@ namespace Sustainsys.Saml2.Metadata
                 metadataLocation = PathHelper.MapPath(metadataLocation);
             }
 
+            if( metadataLocation.StartsWith("http")){
             using (var client = new WebClient())
             using (var stream = client.OpenRead(metadataLocation))
 			using (var ms = new MemoryStream())
@@ -102,7 +103,21 @@ namespace Sustainsys.Saml2.Metadata
 					ms.Write(buf, 0, read);
 				}
 				// System.Diagnostics.Debug.WriteLine(Encoding.UTF8.GetString(ms.ToArray()));
-				ms.Position = 0;
+				return LoadFromStream(ms,signingKeys,validateCertificate,minIncomingSigningAlgorithm);
+            }
+            }
+            else{
+                using(MemoryStream ms = new MemoryStream(File.ReadAllBytes(metadataLocation))){
+				    return LoadFromStream(ms,signingKeys,validateCertificate,minIncomingSigningAlgorithm);
+                }
+            }
+        }
+
+        private static MetadataBase LoadFromStream(MemoryStream ms,
+            IEnumerable<SecurityKeyIdentifierClause> signingKeys,
+            bool validateCertificate,
+            string minIncomingSigningAlgorithm){
+            ms.Position = 0;
                 var reader = XmlDictionaryReader.CreateTextReader(
                     ms,
                     XmlDictionaryReaderQuotas.Max);
@@ -117,7 +132,6 @@ namespace Sustainsys.Saml2.Metadata
                 }
 
                 return Load(reader);
-            }
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "No unmanaged resources involved, safe to ignore")]

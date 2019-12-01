@@ -45,7 +45,7 @@ namespace Sustainsys.Saml2.Internal
             virtualPath = virtualPath.Substring(virtualPath.IndexOfAny(new char[] { '/', '\\' }) + 1);
 
             // Normalize the slashes.
-            virtualPath = virtualPath.Replace('/', '\\');
+            virtualPath = virtualPath.Replace('/', Path.DirectorySeparatorChar);
             return Path.Combine(BasePath, virtualPath);
         }
 

@@ -17,12 +17,12 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <!-- <PropertyGroup>
     <DocumentationFile>C:\git\Sustainsys.Saml2\Sustainsys.Saml2\bin\Sustainsys.Saml2.xml</DocumentationFile>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
   <PropertyGroup>
-    <NoWarn>1701;1702;1591</NoWarn>
+    <NoWarn>1701;1702;1591;3002;3001</NoWarn>
     <Authors>Sustainsys</Authors>
   </PropertyGroup>
 
